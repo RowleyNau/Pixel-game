@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+   <head>
+    <meta charset="utf-8">
+    <title>Game</title>
+        <style>
+            canvas{
+                background-image: url(pictures\\temnatrava.jpg)
+            }
+            /* #commands {
+                width: 300px;
+                height:700px;
+
+            } */
+            body{
+                background-color: rgb(170, 204, 251);
+                background-image: url(pictures\\clouds2.png)
+            }
+            textarea {
+                padding: 10px;
+                max-width: 100%;
+                line-height: 1.5;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                box-shadow: 1px 1px 1px #999;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+            .hiden{
+            display: none;
+            }
+
+            .menu{
+                width: "100%";
+                /* background-color: rgb(80, 141, 228); */
+                margin: 5px 0px 0px 0px;
+                margin-top:0px;
+
+            }
+            .tdMap{
+                border: 10px solid rgb(0, 0, 0);
+            }
+            .tdDialogue{
+                border: 5px solid rgb(0, 0, 0);
+                background-color: rgb(255, 255, 255);
+                /* margin: 0px; */
+            }
+            /* .buttomGo{
+                background: #af0606; /* Синий цвет фона */
+                /* color: #0a0a0a; Белый цвет текста */
+                 /* border: 5px solid rgb(0, 0, 0); Убираем рамку */
+                /* padding: 10px ; Поля вокруг текста */
+                /* margin-bottom: 1rem; Отступ снизу  
+                font-size: 20px;*/
+                /* height:100px; */
+                /* width: 100px; */
+            /* } */ 
+            button.HelpAndGo{
+                background: none; /* Синий цвет фона */
+                /*color: #0a0a0a;  Белый цвет текста */
+                 border: none; /*Убираем рамку */
+                /*padding: 10px ;  Поля вокруг текста */
+                margin: 3rem;
+                /* font-size: 20px; */
+                /* height:100px; */
+                width: 100px;
+            }
+            button.HelpAndGo:hover {
+                transform: translate(0, 0.25em);
+            }
+            button.HelpAndGo:active {
+                transform: translate(0em, 0.75em);
+            }
+            button.levelBut{
+                background: none; /* Синий цвет фона */
+                /*color: #0a0a0a;  Белый цвет текста */
+                 border: none; /*Убираем рамку */
+                /*padding: 10px ;  Поля вокруг текста */
+                margin: 1rem;
+                /* font-size: 20px; */
+                /* height:100px; */
+                width: 100px;
+            }
+            button.levelBut:hover {
+                transform: translate(0, 0.25em);
+            }
+            button.levelBut:active {
+                transform: translate(0em, 0.75em);
+            }
+            textarea{
+                border: 5px solid rgb(0, 0, 0);
+            }
+            .dialog {
+                width: calc(100% - 40px);
+                max-width: 400px;
+                border: 5px solid rgb(0, 0, 0);
+                inset: 0;
+                position: fixed;
+            }
+
+            /* .dialog::backdrop {
+                background-color: rgb(255 0 1 / 0.6);
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+            } */
+
+            .dialog__title {
+                font-size: 26px;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            .dialog p {
+                margin: 0.2em 0 1.5em;
+                font-size: 20px;
+                text-align: left;
+            }
+
+            @media (max-width: 579px) {
+            .dialog {
+                    /* Сдвигаем диалоговые окна ближе к низу страницы, чтобы они не перекрывали кнопки на демке */
+                    margin-bottom: 30px;
+                    bottom: 0;
+                }
+            }
+            .div_ex{
+                display:flex;
+            }
+        </style>
+   </head>
+   <body align="center" >
+    <script type="module">
+            import {startMove} from './game.js';            
+            import {levelAction} from './game.js';          
+            import {readFile} from './LevelDialogFun.js';
+            butlevel1.addEventListener('click', () => {
+                levelAction(1);
+            });
+            butlevel2.addEventListener('click', () => {
+                levelAction(2);
+            });
+            butlevel3.addEventListener('click', () => {
+                levelAction(3);
+            });
+            butlevel4.addEventListener('click', () => {
+                levelAction(4);
+            });
+            butlevel5.addEventListener('click', () => {
+                levelAction(5);
+            });
+            ButStart.addEventListener('click', () => {
+                startMove();
+            });
+            helpMe.addEventListener('click', () => {
+                readFile('ComList');
+                window.myDialog.show();
+            });
+
+    </script>
+    <div  class="menu" >
+        <button id="butlevel1" class="levelBut"><img id="level1"></button>
+        <button id="butlevel2" class="levelBut"><img id="level2"></button>
+        <button id="butlevel3" class="levelBut"><img id="level3"></button>
+        <button id="butlevel4" class="levelBut"><img id="level4"></button>
+        <button id="butlevel5" class="levelBut"><img id="level5"></button>
+    </div>
+        <table width = "100%"  >
+            <tr>
+                <td rowspan="4" width = "1200px"><canvas class="tdMap" id="canvas" width="1000" height="600">
+                </canvas></td>
+            </tr>
+            <tr height= "110px">
+                <td width = "100px" class="tdDialogue" id = 'PersonShow'>
+                    <img id="SpeakPeopleNow">
+                </td>
+                <td class="tdDialogue"><h4 id = 'textShow'></h4></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <h4></h4><textarea id = "code" cols="60" rows="10" placeholder="Что мне делать?"></textarea></h4>
+                    <!-- <input type="text" id="code"> -->
+                </td>
+            </tr>
+            <tr>
+                <td height= "100px" align="center"  >
+                    <button id="ButStart" class = "HelpAndGo"><img src="pictures\\start.png"></button>
+                </td>
+                <td height= "100px" align="center">
+                    <button id="helpMe" class = "HelpAndGo"><img src="pictures\\help.png"></button>
+                    <dialog class="dialog" id="myDialog">
+                        <h1 class="dialog__title">Команды</h1>
+                        <p id = 'commandListText'></p>
+                        <form method="dialog">
+                          <button class = "HelpAndGo" onclick="window['myDialog'].close();"><img src="pictures\\ok.png"></button>
+                        </form>
+                    </dialog>
+                </td>
+            </tr>
+        </table>
+        <img src="pictures\\bush.png" class="hiden" id="bush">
+        <img src="pictures\\coin.png" class="hiden" id="coin">
+        <img src="pictures\\warrior.png" class="hiden" id="warrior">
+        <img src="pictures\\stone.png" class="hiden" id="stone">
+        <img src="pictures\\i.png" class="hiden" id="peopleSPRT">
+        <img src="pictures\\i1.png" class="hiden" id="peopleFace">
+        <img src="pictures\\points.png" class="hiden" id="points">
+        <img src="pictures\\eyesSprite.png" class="hiden" id="eyesSprite">
+        <img src="pictures\\magician.png" class="hiden" id="magician">
+        <img src="pictures\\dream.png" class="hiden" id="dream">
+        <img src="pictures\\fireball.png" class="hiden" id="fireball">        
+        <img src="pictures\\fire.png" class="hiden" id="fire">        
+        <img src="pictures\\bed.png" class="hiden" id="bed">      
+        <img src="pictures\\floor.png" class="hiden" id="floor"> 
+        <img src="pictures\\peopleSleeping.png" class="hiden" id="peopleSleeping">
+         
+        <script src="game.js" type="module"></script> 
+        <script src="drawFun.js" type="module"></script> 
+   </body>
+</html>
